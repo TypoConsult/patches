@@ -1,0 +1,26 @@
+Index: vendor/typo3/cms-core/Classes/Imaging/ImageResource.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/typo3/cms-core/Classes/Imaging/ImageResource.php b/vendor/typo3/cms-core/Classes/Imaging/ImageResource.php
+--- a/vendor/typo3/cms-core/Classes/Imaging/ImageResource.php
++++ b/vendor/typo3/cms-core/Classes/Imaging/ImageResource.php	(date 1760443512430)
+@@ -42,12 +42,15 @@
+ 
+     public static function createFromImageInfo(ImageInfo $imageInfo): self
+     {
++        $fullPath = $imageInfo->getRealPath();
++        $publicUrl = substr($fullPath, strpos($fullPath, 'typo3temp/assets/images/'));
++
+         return new self(
+             width: $imageInfo->getWidth(),
+             height: $imageInfo->getHeight(),
+             extension: $imageInfo->getExtension(),
+-            fullPath: $imageInfo->getPathname(),
+-            publicUrl: PathUtility::getAbsoluteWebPath($imageInfo->getPathname()),
++            fullPath: $fullPath,
++            publicUrl: $publicUrl
+         );
+     }
+ 
